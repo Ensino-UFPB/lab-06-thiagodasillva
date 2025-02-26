@@ -54,14 +54,51 @@ const mensagensDeErro = {
     },
     estado: {
         valueMissing: 'O campo de estado não pode estar vazio.'
+    },
+    numeroCelular: {
+        valueMissing: 'O campo de estado não pode estar vazio.',
+        customError: 'O númer digitado não é válido.' 
+    },
+    nomeUsuario: {
+        valueMissing: 'O campo de estado não pode estar vazio.',
+        customError: 'O usuario digitado não é válido.' 
     }
+
 }
 
 const validadores = {
     dataNascimento:input => validaDataNascimento(input),
     cpf:input => validaCPF(input),
-    cep:input => recuperarCEP(input)
+    cep:input => recuperarCEP(input),
+    numeroCelular:input=> checarNumero(input),
+    nomeUsuario : input => checarUsuario(input)
 }
+
+function checarNumero(input){
+    const numero = input.value.replace(/\D/g, '')
+    let quantos = numero.length
+    let mensagem =''
+    if(quantos != 11){
+        mensagem = "o numero informado não é valido"
+     }
+     input.setCustomValidity(mensagem)
+}
+
+
+function checarUsuario(input){
+    const usuario= input.value
+    const primeiro = usuario.charAt(0)
+    let mensagem = ''
+    if(primeiro != '@'){
+        mensagem = 'o ususario informado não é valido' 
+    }
+
+    input.setCustomValidity(mensagem)
+}
+
+
+
+
 
 function mostraMensagemDeErro(tipoDeInput, input) {
     let mensagem = ''
@@ -71,6 +108,7 @@ function mostraMensagemDeErro(tipoDeInput, input) {
         }
     })
     
+
     return mensagem
 }
 
